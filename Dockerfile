@@ -1,7 +1,6 @@
 FROM python:3.10
-EXPOSE 5000
-WORKDIR /Aapp
-COPY pip install -r requirements.txt 
+WORKDIR /app
+COPY pip install --no-cache-dir --upgrade -r requirements.txt 
 RUN pip install flask
 COPY . .
-CMD ["flask", "run", "--host", "0.0.0.0"]
+CMD ["gunicorn", "--bind", "0.0.0.0:80", "app:create_app()"]
